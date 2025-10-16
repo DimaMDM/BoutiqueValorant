@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-nous{% endblock %}
+
+{% block body %}
+<body class="bg-gray-900 text-white">
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Contactez-nous</h1>
+            <p class="text-lg text-gray-400">Vous avez une question ou une suggestion ? N'hésitez pas à nous contacter !</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 mt-12">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-400">
+            &copy; {{ "now"|date("Y") }} Boutique Valorant. Tous droits réservés.
+        </div>
+    </footer>
+
+</body>
+{% endblock %}

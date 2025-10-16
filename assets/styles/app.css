@@ -2,6 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-.form-width {
-    width: 600px;
+/* Styles personnalisés Valorant */
+@layer components {
+    .form-width {
+        width: 600px;
+    }
+
+    /* Effet néon rouge Valorant */
+    .text-valorant-glow {
+        text-shadow: 0 0 10px rgba(255, 70, 85, 0.5),
+                     0 0 20px rgba(255, 70, 85, 0.3),
+                     0 0 30px rgba(255, 70, 85, 0.2);
+    }
+
+    /* Bordure style Valorant */
+    .border-valorant {
+        border: 2px solid #ff4655;
+        box-shadow: 0 0 10px rgba(255, 70, 85, 0.3);
+    }
+
+    /* Bouton style Valorant */
+    .btn-valorant {
+        @apply bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg 
+               transform transition-all duration-200 hover:scale-105 
+               shadow-lg shadow-red-900/50;
+    }
+
+    /* Card skin hover effect */
+    .skin-card {
+        @apply bg-gray-800 rounded-lg overflow-hidden shadow-xl 
+               transition-all duration-300 hover:shadow-2xl hover:shadow-red-900/20 
+               hover:-translate-y-2;
+    }
+}
+
+/* Animations personnalisées */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff4655;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6575;
 }
