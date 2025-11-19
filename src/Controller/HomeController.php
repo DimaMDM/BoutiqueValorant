@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\SkinRepository;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,13 +10,28 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(SkinRepository $skinRepository): Response
+    public function index(ProductRepository $productRepository): Response
     {
-        // Récupère les 6 derniers skins ajoutés (ou tu peux créer une méthode pour les skins "featured")
-        $featuredSkins = $skinRepository->findBy([], ['id' => 'DESC'], 6);
+        // Récupère tous les produits
+        $allProducts = $productRepository->findAll();
+        
+        // Sélectionne 4 produits aléatoires
+        $featuredProducts = [];
+        if (count($allProducts) > 0) {
+            $randomKeys = array_rand($allProducts, min(4, count($allProducts)));
+            
+            // Si un seul produit, array_rand retourne un entier, pas un tableau
+            if (!is_array($randomKeys)) {
+                $randomKeys = [$randomKeys];
+            }
+            
+            foreach ($randomKeys as $key) {
+                $featuredProducts[] = $allProducts[$key];
+            }
+        }
         
         return $this->render('home/index.html.twig', [
-            'featured_skins' => $featuredSkins,
+            'featured_products' => $featuredProducts,
         ]);
     }
 }

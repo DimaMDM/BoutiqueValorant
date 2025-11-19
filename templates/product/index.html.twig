@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tous les Skins Valorant{% endblock %}
+{% block title %}Tous les Produits Valorant{% endblock %}
 
 {% block body %}
 <!-- Hero Section -->
@@ -8,55 +8,55 @@
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto">
             <h1 class="text-5xl md:text-6xl font-black text-white mb-4">
-                TOUS LES <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">SKINS</span>
+                TOUS LES <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">PRODUITS</span>
             </h1>
             <p class="text-xl text-gray-300">
-                Découvrez l'intégralité de notre collection de skins Valorant
+                Découvrez l'intégralité de notre collection de produits Valorant
             </p>
         </div>
     </div>
 </div>
 
-<!-- Skins Grid -->
+<!-- Products Grid -->
 <div class="bg-gray-900 py-16">
     <div class="container mx-auto px-6">
-        {% if skins is empty %}
+        {% if products is empty %}
             <div class="text-center py-16 bg-gray-800 rounded-xl border border-gray-700">
                 <div class="inline-block p-6 bg-gray-700 rounded-full mb-4">
                     <svg class="w-16 h-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-300 mb-2">Aucun skin disponible</h3>
-                <p class="text-gray-500 mb-6">Les skins seront bientôt ajoutés à la boutique</p>
+                <h3 class="text-xl font-bold text-gray-300 mb-2">Aucun produit disponible</h3>
+                <p class="text-gray-500 mb-6">Les produits seront bientôt ajoutés à la boutique</p>
                 <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
                     ← Retour à l'accueil
                 </a>
             </div>
         {% else %}
-            <!-- Nombre de skins -->
+            <!-- Nombre de produits -->
             <div class="mb-8 text-center">
                 <p class="text-gray-400">
-                    <span class="text-red-500 font-bold text-2xl">{{ skins|length }}</span> 
-                    <span class="text-lg">skin{{ skins|length > 1 ? 's' : '' }} disponible{{ skins|length > 1 ? 's' : '' }}</span>
+                    <span class="text-red-500 font-bold text-2xl">{{ products|length }}</span> 
+                    <span class="text-lg">produit{{ products|length > 1 ? 's' : '' }} disponible{{ products|length > 1 ? 's' : '' }}</span>
                 </p>
             </div>
 
-            <!-- Grille de skins -->
+            <!-- Grille de produits -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {% for skin in skins %}
+                {% for product in products %}
                     <div class="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-900/30 transition-all duration-300 transform hover:-translate-y-3 border border-gray-700 hover:border-red-600">
                         
-                        <!-- Image du skin - hauteur automatique pour éviter la déformation -->
+                        <!-- Image du produit - hauteur automatique pour éviter la déformation -->
                         <div class="relative bg-gradient-to-br from-gray-700 via-gray-800 to-black overflow-hidden p-6 flex items-center justify-center min-h-[200px]">
                             <!-- Badge "Nouveau" -->
                             <div class="absolute top-4 left-4 px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase rounded-full shadow-lg z-10">
                                 Nouveau
                             </div>
                             
-                            {% if skin.image %}
-                                <img src="{{ asset('uploads/skins/' ~ skin.image) }}" 
-                                     alt="{{ skin.name }}" 
+                            {% if product.images is not empty %}
+                                <img src="{{ asset('uploads/products/' ~ product.images[0].url) }}" 
+                                     alt="{{ product.name }}" 
                                      class="max-w-full max-h-[250px] w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-500">
                             {% else %}
                                 <!-- Placeholder amélioré -->
@@ -67,20 +67,20 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-gray-500 text-sm font-semibold uppercase tracking-wider text-center">{{ skin.name }}</span>
+                                    <span class="text-gray-500 text-sm font-semibold uppercase tracking-wider text-center">{{ product.name }}</span>
                                 </div>
                             {% endif %}
                         </div>
 
-                        <!-- Informations du skin -->
+                        <!-- Informations du produit -->
                         <div class="p-6">
                             <h3 class="text-xl font-black text-white mb-2 group-hover:text-red-500 transition-colors line-clamp-1">
-                                {{ skin.name }}
+                                {{ product.name }}
                             </h3>
                             
-                            {% if skin.description %}
+                            {% if product.description %}
                                 <p class="text-gray-400 text-sm mb-4 line-clamp-2">
-                                    {{ skin.description }}
+                                    {{ product.description }}
                                 </p>
                             {% endif %}
 
@@ -88,7 +88,7 @@
                                 <div>
                                     <div class="text-sm text-gray-500 uppercase tracking-wide mb-1">Prix</div>
                                     <span class="text-2xl font-black text-red-500">
-                                        {{ skin.price }} <span class="text-lg">VP</span>
+                                        {{ product.price }} <span class="text-lg">VP</span>
                                     </span>
                                 </div>
                                 <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-red-900/30">
@@ -110,7 +110,7 @@
 <div class="bg-black py-16">
     <div class="container mx-auto px-6 text-center">
         <h2 class="text-3xl font-black text-white mb-4">Vous ne trouvez pas votre bonheur ?</h2>
-        <p class="text-gray-400 mb-8">De nouveaux skins sont ajoutés régulièrement. Revenez bientôt !</p>
+        <p class="text-gray-400 mb-8">De nouveaux produits sont ajoutés régulièrement. Revenez bientôt !</p>
         <a href="{{ path('app_home') }}" 
            class="inline-flex items-center gap-2 bg-transparent border-2 border-red-600 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-all">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
