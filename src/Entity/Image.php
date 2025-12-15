@@ -13,7 +13,7 @@ class Image
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
@@ -30,7 +30,7 @@ class Image
         return $this->url;
     }
 
-    public function setUrl(string $url): static
+    public function setUrl(?string $url): static
     {
         $this->url = $url;
 

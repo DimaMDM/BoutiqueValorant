@@ -1,0 +1,48 @@
+# --- Navigation ---
+menu.home: Accueil
+menu.products: Nos Produits
+menu.about: À Propos
+menu.contact: Contact
+'My Cart': Mon Panier
+Login: Connexion
+Logout: Déconnexion
+Admin: Administration
+
+# --- Page d'accueil (Hero) ---
+home.hero.badge: NOUVELLE COLLECTION DISPONIBLE
+home.hero.title1: VALORANT
+home.hero.title2: PRODUITS PREMIUM
+home.hero.subtitle: Découvrez les collections les plus exclusives et légendaires. Équipez-vous avec style.
+home.hero.button1: EXPLORER LES PRODUITS
+home.hero.button2: VOIR LES TENDANCES
+
+home.hero.stat1.value: 500+
+home.hero.stat1.label: PRODUITS
+home.hero.stat2.value: 24/7
+home.hero.stat2.label: SUPPORT CLIENT
+home.hero.stat3.value: 100%
+home.hero.stat3.label: PAIEMENT SÉCURISÉ
+
+home.featured.header: COLLECTIONS PREMIUM
+home.featured.title: PRODUITS EN VEDETTE
+
+# --- Page Produits ---
+products.title: TOUS NOS PRODUITS
+products.add_new: + Ajouter un produit
+products.no_products: Aucun produit trouvé.
+product.add_cart: Ajouter au panier
+product.edit: Modifier
+product.delete: Supprimer
+product.stock: En stock
+product.out_of_stock: Rupture
+
+# --- Footer ---
+footer.rights: Tous droits réservés.
+footer.student: Projet Étudiant - Valorant Shop
+
+# --- Admin ---
+admin.dashboard: Tableau de Bord
+admin.products: Gérer les Produits
+admin.orders: Gérer les Commandes
+admin.users: Gérer les Utilisateurs
+admin.back_website: Retour au Site

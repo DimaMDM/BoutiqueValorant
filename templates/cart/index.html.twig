@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-white">Mon Panier</h1>
+
+    {% if items | length > 0 %}
+        <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <table class="w-full text-left text-gray-300">
+                <thead>
+                    <tr class="bg-gray-900">
+                        <th class="p-4">Produit</th>
+                        <th class="p-4">Prix</th>
+                        <th class="p-4">Quantité</th>
+                        <th class="p-4">Total</th>
+                        <th class="p-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr class="border-b border-gray-700">
+                        <td class="p-4">{{ item.product.name }}</td>
+                        <td class="p-4">{{ item.product.price }} VP</td> {# Ou /100 si euros #}
+                        <td class="p-4">{{ item.quantity }}</td>
+                        <td class="p-4 font-bold">{{ item.product.price * item.quantity }} VP</td>
+                        <td class="p-4">
+                            <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="text-red-500 hover:text-red-400">
+                                Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="bg-gray-900 font-bold text-white">
+                        <td colspan="3" class="p-4 text-right">TOTAL :</td>
+                        <td class="p-4">{{ total }} VP</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="mt-8 text-right">
+            {# Le fameux bouton pour passer à la Phase 2 #}
+            <a href="{{ path('app_order_validate') }}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded">
+                PAYER & COMMANDER
+            </a>
+        </div>
+    {% else %}
+        <div class="text-gray-400 text-center py-10">
+            <p class="text-xl">Votre panier est vide agent.</p>
+            <a href="{{ path('app_product_index') }}" class="text-red-500 hover:underline mt-4 inline-block">Retourner à la boutique</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

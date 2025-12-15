@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 enum ProductStatus: string
 {
@@ -24,15 +25,19 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom du produit ne peut pas être vide.")]
+    #[Assert\Length(min: 3, minMessage: "Le nom doit faire au moins 3 caractères.")]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "Le prix doit être supérieur à zéro.")]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero(message: "Le stock ne peut pas être négatif.")]
     private ?int $stock = null;
 
     #[ORM\Column(type: "string", enumType: ProductStatus::class)]
@@ -41,9 +46,17 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true)] // nullable=true permet de créer des produits sans catégorie au début
+    private ?Category $category = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
+    private Collection $orderItems;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,5 +154,25 @@ class Product
         }
 
         return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
     }
 }

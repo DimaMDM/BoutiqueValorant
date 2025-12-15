@@ -1,6 +1,5 @@
 <?php
 
-// src/DataFixtures/UserFixtures.php
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -10,32 +9,38 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    private $passwordHasher;
+    // On crée une constante pour rappeler cette référence ailleurs
+    public const ADMIN_USER_REFERENCE = 'user-admin';
+    public const CLIENT_USER_REFERENCE = 'user-client';
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
-    }
+    public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
     public function load(ObjectManager $manager): void
     {
-        $user = new User();
-        $user->setEmail('admin@email.com');
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'azerty');
-        $user->setPassword($hashedPassword);
-        $user->setRoles(['ROLE_ADMIN']);
+        // Admin
+        $admin = new User();
+        $admin->setEmail('admin@valorant.shop');
+        $admin->setFirstName('Jett');
+        $admin->setLastName('Wind');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'password'));
+        $manager->persist($admin);
+        
+        // On pose l'étiquette sur l'admin
+        $this->addReference(self::ADMIN_USER_REFERENCE, $admin);
 
-        $manager->persist($user);
+        // Client
+        $client = new User();
+        $client->setEmail('client@valorant.shop');
+        $client->setFirstName('Phoenix');
+        $client->setLastName('Fire');
+        $client->setRoles(['ROLE_USER']);
+        $client->setPassword($this->passwordHasher->hashPassword($client, 'password'));
+        $manager->persist($client);
 
-        $user2 = new User();
-        $user2->setEmail('user@email.com');
-        $hashedPassword2 = $this->passwordHasher->hashPassword($user2, 'azerty');
-        $user2->setPassword($hashedPassword2);
-        $user2->setRoles(['ROLE_USER']);
-
-        $manager->persist($user2);
+        // On pose l'étiquette sur le client
+        $this->addReference(self::CLIENT_USER_REFERENCE, $client);
 
         $manager->flush();
     }
 }
-

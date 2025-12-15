@@ -94,7 +94,7 @@
                                 <td class="px-6 py-4">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full "
                                           :class="{ 'bg-green-100 text-green-800': product.status == 'AVAILABLE', 'bg-red-100 text-red-800': product.status == 'OUT_OF_STOCK', 'bg-yellow-100 text-yellow-800': product.status == 'PRE_ORDER' }">
-                                        {{ product.status }}
+                                        {{ product.status ? product.status.value : 'Non défini' }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
@@ -123,6 +123,10 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+
+            <div class="navigation flex justify-center mt-4">
+                {{ knp_pagination_render(products) }}
             </div>
 
             <div class="mt-6 text-center">

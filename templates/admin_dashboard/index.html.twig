@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    {# --- DEBUT DU MENU ADMIN --- #}
+    <div class="bg-gray-800 p-4 rounded-lg shadow-lg mb-8 flex flex-wrap gap-4 items-center justify-between border-b-4 border-red-600">
+        <div class="flex gap-4">
+            <a href="{{ path('admin_dashboard') }}" class="bg-gray-900 text-white px-4 py-2 rounded hover:bg-red-600 transition font-bold">
+                📊 {{ 'admin.dashboard'|trans }}
+            </a>
+            <a href="{{ path('app_product_admin_index') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded hover:bg-white hover:text-black transition">
+                🔫 {{ 'admin.products'|trans }}
+            </a>
+            <a href="{{ path('app_order_admin_index') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded hover:bg-white hover:text-black transition">
+                📦 {{ 'admin.orders'|trans }}
+            </a>
+            <a href="{{ path('app_user_admin_index') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded hover:bg-white hover:text-black transition">
+                👥 {{ 'admin.users'|trans }}
+            </a>
+        </div>
+        
+        <div>
+            <a href="{{ path('app_product_index') }}" class="text-gray-400 hover:text-white text-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                {{ 'admin.back_website'|trans }}
+            </a>
+        </div>
+    </div>
+    {# --- FIN DU MENU ADMIN --- #}
+
+    <h1 class="text-3xl font-bold mb-8 text-white">Tableau de Bord Opérationnel</h1>
+
+    {# Zone des Cartes de Stats (KPIs) #}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-green-500">
+            <h3 class="text-gray-400 text-sm font-bold uppercase">Chiffre d'Affaires (Total)</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ totalSales }} €</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-blue-500">
+            <h3 class="text-gray-400 text-sm font-bold uppercase">Produits en Stock</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ statsStatus['disponible'] }}</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-red-500">
+            <h3 class="text-gray-400 text-sm font-bold uppercase">Ruptures de stock</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ statsStatus['en rupture'] }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        {# Colonne Gauche : Dernières Commandes #}
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-white mb-4">5 Dernières Commandes</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-gray-300">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="py-2">Réf</th>
+                            <th class="py-2">Date</th>
+                            <th class="py-2">Montant</th>
+                            <th class="py-2">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in lastOrders %}
+                        <tr class="border-b border-gray-700 hover:bg-gray-700">
+                            <td class="py-2 font-mono">{{ order.reference }}</td>
+                            <td class="py-2">{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td class="py-2 font-bold">{{ (order.totalPrice / 100)|number_format(2, ',', ' ') }} €</td>
+                            <td class="py-2">
+                                <span class="px-2 py-1 text-xs rounded bg-blue-900 text-blue-200">
+                                    {{ order.status ? order.status.value : '?' }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-gray-500">Aucune commande récente.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-right">
+                <a href="{{ path('app_order_admin_index') }}" class="text-sm text-blue-400 hover:text-blue-300">Voir tout →</a>
+            </div>
+        </div>
+
+        {# Colonne Droite : Stats par Catégorie #}
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-white mb-4">Produits par Catégorie</h2>
+            <ul>
+                {% for category, count in statsCategory %}
+                <li class="flex justify-between items-center py-3 border-b border-gray-700 last:border-0">
+                    <span class="text-gray-300">{{ category }}</span>
+                    <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm font-bold">{{ count }}</span>
+                </li>
+                {% else %}
+                <li class="text-gray-500">Aucune catégorie trouvée.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

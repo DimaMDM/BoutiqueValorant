@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Produit{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-black py-4 px-6 border-b border-gray-700 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white">Modifier le produit</h1>
+                {{ include('product/_delete_form.html.twig') }}
+            </div>
+            <div class="p-6">
+                {{ include('product/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -34,4 +34,14 @@ class HomeController extends AbstractController
             'featured_products' => $featuredProducts,
         ]);
     }
+
+    #[Route('/change-locale/{locale}', name: 'change_locale')]
+    public function changeLocale($locale, \Symfony\Component\HttpFoundation\Request $request): Response
+    {
+        // On stocke la langue demandée dans la session
+        $request->getSession()->set('_locale', $locale);
+
+        // On revient sur la page précédente
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

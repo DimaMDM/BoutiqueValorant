@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Produit{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-black py-4 px-6 border-b border-gray-700">
+                <h1 class="text-2xl font-bold text-white">Créer un nouveau produit</h1>
+            </div>
+            <div class="p-6">
+                {{ include('product/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

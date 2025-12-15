@@ -1,0 +1,44 @@
+<div{{ attributes }} class="relative w-full max-w-md mx-auto mb-8">
+    {# Champ de recherche #}
+    <div class="relative">
+        <input 
+            type="search" 
+            data-model="query" 
+            class="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 focus:outline-none focus:border-red-500 transition-colors"
+            placeholder="Rechercher un skin (ex: Vandal)..."
+        >
+        
+        {# Icône de chargement (s'affiche quand ça cherche) #}
+        <div class="absolute right-3 top-3" data-loading>
+            <svg class="animate-spin h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+    </div>
+
+    {# Résultats #}
+    {% if this.products|length > 0 %}
+        <div class="absolute z-50 w-full mt-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 overflow-hidden">
+            {% for product in this.products %}
+                <a href="{{ path('app_product_show', {id: product.id}) }}" class="block px-4 py-3 hover:bg-gray-800 border-b border-gray-800 last:border-0 flex items-center gap-4 transition-colors">
+                    {# Image miniature si tu en as #}
+                    {% if product.imageName %}
+                        <img src="{{ asset('images/products/' ~ product.imageName) }}" alt="{{ product.name }}" class="w-10 h-10 object-cover rounded">
+                    {% else %}
+                        <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-xs text-gray-500">IMG</div>
+                    {% endif %}
+                    
+                    <div>
+                        <div class="font-bold text-white">{{ product.name }}</div>
+                        <div class="text-sm text-red-400 font-mono">{{ product.price }} VP</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% elseif query|length > 0 %}
+         <div class="absolute z-50 w-full mt-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-4 text-center text-gray-400">
+            Aucun agent ou skin trouvé.
+        </div>
+    {% endif %}
+</div>

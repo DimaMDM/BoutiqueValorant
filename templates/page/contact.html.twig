@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'menu.contact'|trans }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-16">
+    <h1 class="text-4xl font-bold mb-12 text-center text-white">NOUS CONTACTER</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {# Carte Info #}
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg border-l-4 border-red-500">
+            <h2 class="text-2xl font-bold text-white mb-6">Nos Coordonnées</h2>
+            <ul class="space-y-4 text-gray-300">
+                <li class="flex items-center gap-4">
+                    <span class="font-bold text-red-500">Email:</span>
+                    support@valorant-shop.test
+                </li>
+                <li class="flex items-center gap-4">
+                    <span class="font-bold text-red-500">Discord:</span>
+                    ValorantShop#1234
+                </li>
+                <li class="flex items-center gap-4">
+                    <span class="font-bold text-red-500">Adresse:</span>
+                    123 Radiante Street, Bind, Morocco
+                </li>
+            </ul>
+        </div>
+
+        {# Faux Formulaire (Juste visuel pour faire propre) #}
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg">
+            <form onsubmit="event.preventDefault(); alert('Message envoyé (Simulation)');">
+                <div class="mb-4">
+                    <label class="block text-gray-400 mb-2">Votre Email</label>
+                    <input type="email" class="w-full bg-gray-700 text-white rounded p-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="agent@valorant.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-400 mb-2">Message</label>
+                    <textarea class="w-full bg-gray-700 text-white rounded p-2 h-32 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="J'ai un problème avec ma commande..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded transition">
+                    ENVOYER LE MESSAGE
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

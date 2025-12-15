@@ -1,0 +1,48 @@
+# --- Navigation ---
+menu.home: Home
+menu.products: Our Products
+menu.about: About
+menu.contact: Contact
+'My Cart': My Cart
+Login: Login
+Logout: Logout
+Admin: Admin
+
+# --- Page d'Accueil (Hero) ---
+home.hero.badge: NEW COLLECTION AVAILABLE
+home.hero.title1: VALORANT
+home.hero.title2: PREMIUM PRODUCTS
+home.hero.subtitle: Discover the most exclusive and legendary collections. Equip yourself with style.
+home.hero.button1: EXPLORE PRODUCTS
+home.hero.button2: SEE TRENDS
+
+home.hero.stat1.value: 500+
+home.hero.stat1.label: PRODUCTS AVAILABLE
+home.hero.stat2.value: 24/7
+home.hero.stat2.label: CUSTOMER SUPPORT
+home.hero.stat3.value: 100%
+home.hero.stat3.label: SECURE PAYMENT
+
+home.featured.header: PREMIUM COLLECTIONS
+home.featured.title: FEATURED PRODUCTS
+
+# --- Page Produits ---
+products.title: ALL OUR PRODUCTS
+products.add_new: + Add new product
+products.no_products: No products found.
+product.add_cart: Add to cart
+product.edit: Edit
+product.delete: Delete
+product.stock: In stock
+product.out_of_stock: Out of stock
+
+# --- Footer ---
+footer.rights: All rights reserved.
+footer.student: Student Project - Valorant Shop
+
+# --- Admin ---
+admin.dashboard: Dashboard
+admin.products: Manage Products
+admin.orders: Manage Orders
+admin.users: Manage Users
+admin.back_website: Back to Website
