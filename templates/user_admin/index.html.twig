@@ -1,45 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Gestion des Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+<div class="container mx-auto px-4 py-8">
+    
+    {# En-tête avec Bouton Créer #}
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-white">👥 Gestion des Utilisateurs</h1>
+        <a href="{{ path('app_user_admin_new') }}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition">
+            + Nouvel Utilisateur
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>IsVerified</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_user_admin_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_admin_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_user_admin_new') }}">Create new</a>
+    {# Tableau Stylisé #}
+    <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-900 text-gray-400 uppercase text-xs tracking-wider">
+                    <th class="p-4 font-semibold border-b border-gray-700">ID</th>
+                    <th class="p-4 font-semibold border-b border-gray-700">Email</th>
+                    <th class="p-4 font-semibold border-b border-gray-700">Rôles</th>
+                    <th class="p-4 font-semibold border-b border-gray-700">Nom Complet</th>
+                    <th class="p-4 font-semibold border-b border-gray-700">Vérifié ?</th>
+                    <th class="p-4 font-semibold border-b border-gray-700 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-300 divide-y divide-gray-700">
+            {% for user in users %}
+                <tr class="hover:bg-gray-750 transition duration-150">
+                    <td class="p-4 font-mono text-sm text-gray-500">#{{ user.id }}</td>
+                    <td class="p-4 font-bold text-white">{{ user.email }}</td>
+                    <td class="p-4">
+                        {% for role in user.roles %}
+                            <span class="inline-block bg-gray-700 text-xs px-2 py-1 rounded mr-1 mb-1">
+                                {{ role|replace({'ROLE_': ''}) }}
+                            </span>
+                        {% endfor %}
+                    </td>
+                    {# Adapte ces champs si tes propriétés s'appellent différemment #}
+                    <td class="p-4">{{ user.firstName }} {{ user.lastName }}</td>
+                    <td class="p-4">
+                        {% if user.isVerified %}
+                            <span class="text-green-400 font-bold">Oui</span>
+                        {% else %}
+                            <span class="text-red-400">Non</span>
+                        {% endif %}
+                    </td>
+                    <td class="p-4 text-right space-x-2">
+                        <a href="{{ path('app_user_admin_show', {'id': user.id}) }}" class="text-blue-400 hover:text-blue-300 text-sm font-bold">Voir</a>
+                        <a href="{{ path('app_user_admin_edit', {'id': user.id}) }}" class="text-yellow-400 hover:text-yellow-300 text-sm font-bold">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="p-8 text-center text-gray-500">Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
